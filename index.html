@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>A Little Something For You 💌</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+overflow:hidden;
+font-family:Georgia,serif;
+color:#654354;
+background:#f8dce8;
+}
+
+.screen{
+position:absolute;
+inset:0;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+text-align:center;
+padding:25px;
+opacity:0;
+pointer-events:none;
+transform:scale(1.04);
+transition:opacity .8s,transform .8s;
+background:
+radial-gradient(circle at 12% 18%,#fff1c888 0 4%,transparent 5%),
+radial-gradient(circle at 88% 25%,#dfc9ff88 0 5%,transparent 6%),
+linear-gradient(135deg,#ffdce9,#eadcff);
+}
+
+.screen.active{
+opacity:1;
+pointer-events:auto;
+transform:scale(1);
+}
+
+h1{
+font-size:42px;
+margin:12px;
+color:#70475f;
+}
+
+p{
+font-family:Arial,sans-serif;
+font-size:18px;
+line-height:1.7;
+max-width:560px;
+}
+
+button{
+border:0;
+padding:14px 28px;
+border-radius:30px;
+background:white;
+color:#70475f;
+font-size:17px;
+font-weight:bold;
+cursor:pointer;
+box-shadow:0 8px 25px #6d455d25;
+transition:.25s;
+}
+
+button:hover{
+transform:translateY(-4px) scale(1.04);
+}
+
+.float{
+position:absolute;
+font-size:25px;
+opacity:.7;
+animation:float 5s infinite ease-in-out;
+pointer-events:none;
+}
+
+.f1{left:8%;top:15%}
+.f2{right:10%;top:20%;animation-delay:1s}
+.f3{left:15%;bottom:15%;animation-delay:2s}
+.f4{right:18%;bottom:18%;animation-delay:3s}
+
+@keyframes float{
+50%{transform:translateY(-25px) rotate(10deg)}
+}
+
+.envelopeWrap{
+position:relative;
+width:280px;
+height:190px;
+margin:25px;
+cursor:pointer;
+animation:gentle 2s infinite;
+}
+
+.envelope{
+position:absolute;
+bottom:0;
+width:280px;
+height:170px;
+background:#ef9fbd;
+border-radius:15px;
+box-shadow:0 20px 45px #713f5835;
+}
+
+.envelope:before{
+content:"";
+position:absolute;
+left:0;
+top:0;
+border-left:140px solid transparent;
+border-right:140px solid transparent;
+border-top:100px solid #df83a8;
+z-index:3;
+}
+
+.envelope:after{
+content:"";
+position:absolute;
+bottom:0;
+left:0;
+border-left:140px solid #e88fb0;
+border-right:140px solid #e88fb0;
+border-top:90px solid transparent;
+}
+
+.seal{
+position:absolute;
+z-index:5;
+top:70px;
+left:115px;
+width:50px;
+height:50px;
+border-radius:50%;
+background:#fff1f5;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:25px;
+}
+
+.letterPeek{
+position:absolute;
+width:225px;
+height:125px;
+background:#fffdf8;
+left:27px;
+top:20px;
+border-radius:8px;
+z-index:1;
+transition:.8s;
+}
+
+.envelopeWrap:hover .letterPeek{
+transform:translateY(-45px);
+}
+
+@keyframes gentle{
+50%{transform:translateY(-6px)}
+}
+
+.bouquetArea{
+position:relative;
+width:330px;
+height:300px;
+margin:5px;
+}
+
+.bouquetFlowers{
+position:absolute;
+left:50%;
+top:20px;
+transform:translateX(-50%);
+width:260px;
+height:220px;
+}
+
+.flower{
+position:absolute;
+font-size:65px;
+filter:drop-shadow(0 7px 8px #653e5030);
+animation:bloom 1s backwards;
+}
+
+.flower:nth-child(1){left:20px;top:55px}
+.flower:nth-child(2){left:80px;top:10px}
+.flower:nth-child(3){left:140px;top:45px}
+.flower:nth-child(4){left:50px;top:95px}
+.flower:nth-child(5){left:115px;top:85px}
+
+.stems{
+position:absolute;
+left:50%;
+top:125px;
+width:100px;
+height:150px;
+transform:translateX(-50%);
+border-left:5px solid #568567;
+border-right:5px solid #568567;
+border-radius:50%;
+}
+
+.wrap{
+position:absolute;
+bottom:0;
+left:50%;
+transform:translateX(-50%);
+width:170px;
+height:95px;
+background:linear-gradient(135deg,#f8d2df,#e7adc4);
+clip-path:polygon(8% 0,92% 0,70% 100%,30% 100%);
+}
+
+.ribbon{
+position:absolute;
+bottom:45px;
+left:50%;
+transform:translateX(-50%);
+font-size:28px;
+}
+
+@keyframes bloom{
+0%{transform:scale(0);opacity:0}
+100%{transform:scale(1);opacity:1}
+}
+
+.giftBox{
+font-size:115px;
+cursor:pointer;
+animation:gift 1.8s infinite;
+}
+
+@keyframes gift{
+50%{transform:rotate(5deg) scale(1.05)}
+}
+
+.photoFrame{
+width:min(420px,90vw);
+height:300px;
+background:white;
+padding:12px;
+box-shadow:0 20px 45px #70445630;
+transform:rotate(-2deg);
+margin:20px;
+}
+
+.photoFrame img{
+width:100%;
+height:100%;
+object-fit:cover;
+display:none;
+}
+
+.photoPlaceholder{
+height:100%;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+background:#f7edf1;
+font-family:Arial;
+}
+
+input[type=file]{display:none}
+
+.upload{
+display:inline-block;
+background:white;
+padding:13px 22px;
+border-radius:25px;
+cursor:pointer;
+box-shadow:0 7px 20px #65405220;
+font-family:Arial;
+font-weight:bold;
+}
+
+.paper{
+width:min(650px,92vw);
+max-height:70vh;
+overflow:auto;
+background:#fffaf1;
+padding:42px;
+border-radius:5px;
+box-shadow:0 20px 60px #633f4a35;
+text-align:left;
+transform:rotate(-1deg);
+}
+
+.paper h2{
+text-align:center;
+font-size:31px;
+font-weight:normal;
+}
+
+.paper p{
+font-family:Georgia,serif;
+font-size:17px;
+line-height:1.9;
+}
+
+.hearts{
+display:flex;
+gap:18px;
+flex-wrap:wrap;
+justify-content:center;
+margin:25px;
+}
+
+.heartBtn{
+font-size:48px;
+background:none;
+box-shadow:none;
+padding:5px;
+}
+
+.heartBtn:hover{
+transform:scale(1.25) rotate(8deg);
+box-shadow:none;
+}
+
+.finalHeart{
+font-size:100px;
+animation:heartbeat 1.3s infinite;
+}
+
+@keyframes heartbeat{
+50%{transform:scale(1.18)}
+}
+
+.particles{
+position:absolute;
+inset:0;
+pointer-events:none;
+z-index:50;
+}
+
+.particle{
+position:absolute;
+animation:rise 4s linear forwards;
+}
+
+@keyframes rise{
+from{transform:translateY(0);opacity:1}
+to{transform:translateY(-300px) rotate(180deg);opacity:0}
+}
+
+.small{
+font-size:14px;
+opacity:.65;
+}
+</style>
+</head>
+
+<body>
+
+<div class="particles" id="particles"></div>
+
+<div class="float f1">♡</div>
+<div class="float f2">✨</div>
+<div class="float f3">🌸</div>
+<div class="float f4">💗</div>
+
+<section class="screen active" id="s1">
+<div style="font-size:65px">💌</div>
+<h1>Hey Reet...</h1>
+<p>
+I made a tiny little world for you.
+<br>
+And no, I'm not telling you what's inside. 👀
+</p>
+<button onclick="next(2)">Enter ✨</button>
+</section>
+
+<section class="screen" id="s2">
+<h1>One little rule...</h1>
+<p>
+Don't rush through this.
+<br>
+There are little things hidden between the surprises.
+</p>
+<button onclick="next(3)">Okay, I promise 💗</button>
+</section>
+
+<section class="screen" id="s3">
+<h1>A letter is waiting...</h1>
+<div class="envelopeWrap" onclick="next(4);sparkles()">
+<div class="letterPeek"></div>
+<div class="envelope">
+<div class="seal">♥</div>
+</div>
+</div>
+<p class="small">Tap the envelope.</p>
+</section>
+
+<section class="screen" id="s4">
+
+<div class="bouquetArea">
+<div class="bouquetFlowers">
+<div class="flower">🌹</div>
+<div class="flower">🌷</div>
+<div class="flower">🌸</div>
+<div class="flower">🌹</div>
+<div class="flower">🌷</div>
+</div>
+<div class="stems"></div>
+<div class="wrap"></div>
+<div class="ribbon">🎀</div>
+</div>
+
+<h1>A bouquet for you. 💐</h1>
+<p>
+A real bouquet would have been nicer...
+<br>
+but for now, let this one live here.
+</p>
+<button onclick="next(5);sparkles()">Take it with you 🌷</button>
+</section>
+
+<section class="screen" id="s5">
+<h1>Hmm...</h1>
+<p>
+Flowers weren't the only thing I prepared.
+<br><br>
+There's something under that ribbon.
+</p>
+<div class="giftBox" onclick="next(6);sparkles()">🎁</div>
+<p class="small">Go on. Open it.</p>
+</section>
+
+<section class="screen" id="s6">
+
+<h1>Our little corner 📸</h1>
+
+<p>
+Put one of your favorite photos of us here.
+</p>
+
+<div class="photoFrame">
+
+<div class="photoPlaceholder" id="photoPlaceholder">
+<div style="font-size:50px">📷</div>
+<p style="font-size:14px">Your photo will appear here</p>
+</div>
+
+<img id="ourPhoto">
+
+</div>
+
+<label class="upload">
+Choose our photo
+<input type="file" accept="image/*" onchange="loadPhoto(event)">
+</label>
+
+<br>
+
+<button onclick="next(7)">
+Keep this memory 💗
+</button>
+
+</section>
+
+<section class="screen" id="s7">
+
+<div style="font-size:65px">🎀</div>
+
+<h1>One little game.</h1>
+
+<p>
+One of these hearts is hiding your next surprise.
+<br>
+Choose carefully. 👀
+</p>
+
+<div class="hearts">
+<button class="heartBtn" onclick="wrong()">💗</button>
+<button class="heartBtn" onclick="wrong()">💖</button>
+<button class="heartBtn" onclick="correct()">💝</button>
+<button class="heartBtn" onclick="wrong()">💓</button>
+</div>
+
+<p id="gameText"></p>
+
+</section>
+
+<section class="screen" id="s8">
+
+<div style="font-size:70px">✨</div>
+
+<h1>You found it.</h1>
+
+<p>
+See?
+<br>
+I told you there were surprises hiding around here.
+</p>
+
+<button onclick="next(9);sparkles()">
+There's more? 👀
+</button>
+
+</section>
+
+<section class="screen" id="s9">
+
+<div class="paper">
+
+<h2>For you, with love 💌</h2>
+
+<p>My love,</p>
+
+<p>
+I didn't want to make this just another message
+that gets lost somewhere in our chats.
+I wanted to make you a little place of my own —
+a place where you could find a few pieces of us,
+one surprise at a time.
+</p>
+
+<p>
+I know things haven't been perfect between us.
+We've had moments where we've misunderstood each other,
+moments that hurt, moments when things felt distant
+or complicated.
+And I won't pretend those moments don't matter.
+</p>
+
+<p>
+But neither do they erase all the good things.
+</p>
+
+<p>
+I still remember the little moments that made me smile,
+the stupid things that made us laugh,
+the conversations I didn't want to end,
+and all those tiny memories that probably seemed ordinary
+at the time but somehow stayed with me.
+</p>
+
+<p>
+Maybe that's why I made this.
+</p>
+
+<p>Not because everything is perfect.</p>
+
+<p>
+But because <strong>you still matter to me.</strong>
+</p>
+
+<p>
+I don't know exactly what the future will look like,
+and I don't want to make promises just for the sake
+of making them.
+I just know that, despite the difficult moments,
+there is still a part of me that cares, remembers,
+hopes, and wants the good between us to mean something.
+</p>
+
+<p>
+So if you ever come back to this little world,
+I hope you remember that it wasn't made because
+everything was easy.
+</p>
+
+<p>
+It was made because, even when things were complicated,
+<strong>there were still beautiful things worth remembering.</strong>
+</p>
+
+<p>
+And maybe that's enough for today.
+</p>
+
+<p>
+Thank you for being a part of my story.
+<br>
+And thank you for all the moments that made it ours. 💗
+</p>
+
+<p style="text-align:right">— with love</p>
+
+</div>
+
+<br>
+
+<button onclick="next(10);sparkles()">
+One last surprise...
+</button>
+
+</section>
+
+<section class="screen" id="s10">
+
+<div class="finalHeart">💗</div>
+
+<h1>That's it...</h1>
+
+<p>
+You found everything.
+<br><br>
+Well...
+almost everything.
+</p>
+
+<button onclick="next(11)">
+Wait... what? 👀
+</button>
+
+</section>
+
+<section class="screen" id="s11">
+
+<div style="font-size:90px">🌷💗✨</div>
+
+<h1>Okay. NOW that's it.</h1>
+
+<p>
+No more secret buttons.
+No more hidden surprises.
+<br><br>
+Just this:
+<br><br>
+<strong>
+I'm really, really glad you're here.
+</strong>
+<br><br>
+And I'm glad this little world
+ended with you.
+</p>
+
+<div style="font-size:35px">♡</div>
+
+</section>
+
+<script>
+
+function next(n){
+
+document.querySelectorAll(".screen")
+.forEach(s=>s.classList.remove("active"));
+
+setTimeout(()=>{
+document.getElementById("s"+n).classList.add("active");
+},80);
+
+}
+
+function wrong(){
+
+document.getElementById("gameText").textContent=
+"Not this one 😭 Try another.";
+
+}
+
+function correct(){
+
+document.getElementById("gameText").textContent=
+"YOU FOUND IT! 💝";
+
+sparkles();
+
+setTimeout(()=>{
+next(8);
+},1000);
+
+}
+
+function loadPhoto(event){
+
+let file=event.target.files[0];
+
+if(!file)return;
+
+let reader=new FileReader();
+
+reader.onload=function(e){
+
+let img=document.getElementById("ourPhoto");
+
+img.src=e.target.result;
+img.style.display="block";
+
+document.getElementById("photoPlaceholder")
+.style.display="none";
+
+sparkles();
+
+};
+
+reader.readAsDataURL(file);
+
+}
+
+function sparkles(){
+
+for(let i=0;i<20;i++){
+
+let p=document.createElement("div");
+
+p.className="particle";
+
+p.textContent=
+["✨","💗","♡","🌸","💕"]
+[Math.floor(Math.random()*5)];
+
+p.style.left=Math.random()*100+"%";
+p.style.top=(60+Math.random()*40)+"%";
+p.style.fontSize=
+(15+Math.random()*20)+"px";
+
+document.getElementById("particles")
+.appendChild(p);
+
+setTimeout(()=>{
+p.remove();
+},4000);
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
